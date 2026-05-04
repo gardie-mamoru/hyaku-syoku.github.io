@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>軽井沢家族旅行 しおり｜2026.5.5-6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf6ef;
+    --bg-2: #f3ecdf;
+    --card: #ffffff;
+    --ink: #3d3a2f;
+    --ink-soft: #6b6557;
+    --accent: #6b8e4e;
+    --accent-deep: #4a6b35;
+    --accent-light: #e8efd9;
+    --accent-glow: #c8d9a8;
+    --rose: #c97a8a;
+    --rose-light: #f5e3e7;
+    --gold: #c89968;
+    --warn: #d49060;
+    --line: #e6dec9;
+    --shadow: 0 4px 16px rgba(74, 107, 53, 0.08);
+    --shadow-deep: 0 8px 32px rgba(74, 107, 53, 0.12);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Zen Maru Gothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+    background:
+      radial-gradient(at top right, #e8efd9 0%, transparent 40%),
+      radial-gradient(at bottom left, #f5e3e7 0%, transparent 40%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    line-height: 1.8;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mincho {
+    font-family: "Shippori Mincho", "Yu Mincho", serif;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 56px 24px 80px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.0) 0%, rgba(250,246,239,0.95) 100%),
+      linear-gradient(135deg, #6b8e4e 0%, #8ba968 50%, #a8c084 100%);
+    color: white;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 30%);
+    pointer-events: none;
+  }
+  .header-deco {
+    font-size: 1.4rem;
+    letter-spacing: 0.5em;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-family: "Shippori Mincho", serif;
+    margin: 8px 0 16px;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .header-sub {
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    opacity: 0.95;
+    margin-bottom: 4px;
+  }
+  .header-date {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .header-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background:
+      radial-gradient(ellipse 60% 100% at 50% 100%, var(--bg) 50%, transparent 51%);
+  }
+
+  /* ============ NAV ============ */
+  .quick-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: -56px -4px 32px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .quick-nav a {
+    text-align: center;
+    background: white;
+    color: var(--accent-deep);
+    text-decoration: none;
+    padding: 14px 6px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .quick-nav a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-deep);
+  }
+  .quick-nav .icon {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 2px;
+  }
+
+  /* ============ CARDS ============ */
+  .day-card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .day-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--line);
+    position: relative;
+  }
+  .day-badge {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    box-shadow: 0 2px 8px rgba(107, 142, 78, 0.3);
+  }
+  .day-title {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--accent-deep);
+  }
+  .day-date {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  /* ============ TIMELINE ============ */
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 76px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent-glow) 0%, var(--accent-light) 100%);
+    border-radius: 2px;
+  }
+  .timeline li {
+    display: flex;
+    gap: 18px;
+    padding: 12px 0;
+    position: relative;
+    align-items: flex-start;
+  }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: 71px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 0 3px var(--bg);
+  }
+  .timeline li.highlight::before {
+    background: var(--rose);
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 12px var(--rose-light);
+  }
+  .time {
+    font-family: "Shippori Mincho", serif;
+    font-weight: 700;
+    color: var(--accent-deep);
+    min-width: 64px;
+    font-size: 0.95rem;
+    text-align: right;
+    padding-top: 4px;
+    flex-shrink: 0;
+  }
+  .activity {
+    flex: 1;
+    padding-left: 16px;
+  }
+  .activity strong {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .activity .note {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ============ INFO BOXES ============ */
+  .info-box {
+    background: linear-gradient(135deg, var(--accent-light) 0%, #f3ecdf 100%);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 0.88rem;
+    border: 1px solid var(--accent-glow);
+  }
+  .info-box strong {
+    display: block;
+    color: var(--accent-deep);
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+  .warn-box {
+    background: linear-gradient(135deg, #fdf0e8 0%, #fce8d8 100%);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 0.88rem;
+    border: 1px solid #f0d4b8;
+  }
+  .warn-box strong {
+    display: block;
+    color: var(--warn);
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+  .rose-box {
+    background: linear-gradient(135deg, var(--rose-light) 0%, #faedf0 100%);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 0.88rem;
+    border: 1px solid #ecc8d0;
+  }
+  .rose-box strong {
+    display: block;
+    color: var(--rose);
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  /* ============ SECTIONS ============ */
+  h2.section {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.15rem;
+    color: var(--accent-deep);
+    margin: 28px 0 16px;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+    line-height: 1.4;
+  }
+  h2.section:first-child { margin-top: 0; }
+
+  h3.role-title {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.05rem;
+    margin: 24px 0 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+  h3.role-husband {
+    background: linear-gradient(135deg, #e3edf5 0%, #f0f6fb 100%);
+    color: #2e6da4;
+    border-left: 4px solid #5a8cb5;
+  }
+  h3.role-wife {
+    background: linear-gradient(135deg, var(--rose-light) 0%, #faedf0 100%);
+    color: var(--rose);
+    border-left: 4px solid var(--rose);
+  }
+
+  /* ============ TABLE ============ */
+  .shop-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.88rem;
+    margin: 8px 0 16px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .shop-table th, .shop-table td {
+    text-align: left;
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .shop-table tr:last-child td { border-bottom: none; }
+  .shop-table th {
+    background: var(--bg-2);
+    color: var(--accent-deep);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+  .shop-table td:first-child {
+    color: var(--ink-soft);
+    font-weight: 700;
+    width: 28px;
+  }
+  .shop-table tr:hover td {
+    background: var(--bg);
+  }
+  .area-tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent-deep);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-right: 4px;
+    letter-spacing: 0.03em;
+  }
+  .area-tag.east { background: #e3edf5; color: #2e6da4; }
+  .area-tag.west { background: var(--rose-light); color: var(--rose); }
+  .area-tag.tree { background: #f5edd9; color: #a07b3f; }
+
+  /* ============ CHECKLIST ============ */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 16px;
+  }
+  .checklist li {
+    padding: 8px 0 8px 32px;
+    position: relative;
+    font-size: 0.92rem;
+    border-bottom: 1px dotted var(--line);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 12px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    background: white;
+  }
+  .checklist-title {
+    font-family: "Shippori Mincho", serif;
+    font-size: 0.95rem;
+    color: var(--accent-deep);
+    margin: 16px 0 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--accent-glow);
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-grid {
+    display: grid;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-2);
+    border-radius: 12px;
+    font-size: 0.9rem;
+  }
+  .contact-item .name {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .contact-item a {
+    color: var(--accent-deep);
+    text-decoration: none;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    text-align: center;
+    padding: 48px 16px 32px;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  footer .heart {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.05rem;
+    color: var(--accent-deep);
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
+  footer .leaves {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.2em;
+  }
+
+  /* ============ DECORATIVE ============ */
+  .divider {
+    text-align: center;
+    margin: 24px 0;
+    color: var(--accent-glow);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 480px) {
+    header { padding: 40px 16px 70px; }
+    header h1 { font-size: 1.7rem; }
+    .quick-nav { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .quick-nav a { font-size: 0.72rem; padding: 12px 4px; }
+    .day-card { padding: 24px 18px; }
+    .day-title { font-size: 1.2rem; }
+    .timeline::before { left: 56px; }
+    .timeline li::before { left: 51px; }
+    .time { min-width: 48px; font-size: 0.85rem; }
+    .activity { padding-left: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-deco">・ ・ ・</div>
+  <div class="header-sub">Family Trip to Karuizawa</div>
+  <h1>軽井沢 家族旅行</h1>
+  <div class="header-sub">おもちゃ王国 ＆ アウトレット</div>
+  <div class="header-date">2026.5.5(火) ─ 5.6(水)</div>
+  <div class="header-wave"></div>
+</header>
+
+<div class="container">
+
+  <nav class="quick-nav">
+    <a href="#day1"><span class="icon">🎢</span>1日目</a>
+    <a href="#day2"><span class="icon">🛍</span>2日目</a>
+    <a href="#shops"><span class="icon">🛒</span>お店</a>
+    <a href="#checklist"><span class="icon">🎒</span>持ち物</a>
+  </nav>
+
+  <!-- =========== DAY 1 =========== -->
+  <section class="day-card" id="day1">
+    <div class="day-header">
+      <span class="day-badge">DAY 1</span>
+      <div>
+        <div class="day-title">おもちゃ王国でいっぱい遊ぼう</div>
+        <div class="day-date">5月5日（火）こどもの日</div>
+      </div>
+    </div>
+
+    <ul class="timeline">
+      <li>
+        <span class="time">7:30</span>
+        <div class="activity">
+          <strong>🚗 宇都宮駅東公園 出発</strong>
+          <span class="note">サーパスから直行（コンビニ寄らず）</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">7:45</span>
+        <div class="activity">
+          <strong>宇都宮上三川IC → 北関東道</strong>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">8:55</span>
+        <div class="activity">
+          <strong>☕ 太田強戸PA（15分だけ）</strong>
+          <span class="note">朝食はパン・おにぎりをテイクアウト → 車内で食べる<br>トイレは完全に済ませる（R146途中はコンビニ少なめ）</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">9:10</span>
+        <div class="activity">
+          <strong>PA出発</strong>
+        </div>
+      </li>
+      <li>
+        <span class="time">10:20</span>
+        <div class="activity">
+          <strong>高崎JCT → 上信越道</strong>
+          <span class="note">横川SAは通過します</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">10:50</span>
+        <div class="activity">
+          <strong>碓氷軽井沢IC 退出</strong>
+          <span class="note">R18バイパス → 中軽井沢 → R146 北上</span>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">11:00</span>
+        <div class="activity">
+          <strong>🎯 軽井沢おもちゃ王国 到着！</strong>
+          <span class="note">ナビ目的地：「ホテルグリーンプラザ軽井沢」</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">11:00<br>〜17:00</span>
+        <div class="activity">
+          <strong>🎢 おもちゃ王国 たっぷり遊ぶ（6時間）</strong>
+          <span class="note">園内で昼食。屋内・屋外アトラクション豊富</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">17:00</span>
+        <div class="activity">
+          <strong>ホテルグリーンプラザ軽井沢へ</strong>
+          <span class="note">隣接、徒歩 or 車で5分</span>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">17:30</span>
+        <div class="activity">
+          <strong>♨ チェックイン → 温泉でリラックス</strong>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">18:30</span>
+        <div class="activity">
+          <strong>🍽 夕食バイキング</strong>
+        </div>
+      </li>
+    </ul>
+
+    <div class="info-box">
+      <strong>📍 ルート（約225km / 3:30〜3:40）</strong>
+      宇都宮上三川IC ▸ 北関東道 ▸ 高崎JCT ▸ 上信越道 ▸ 碓氷軽井沢IC ▸ R18 ▸ R146
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ GW最終日 注意</strong>
+      朝の中軽井沢交差点は混む可能性あり。+10〜15分の遅れを想定して。
+    </div>
+  </section>
+
+  <!-- =========== DAY 2 =========== -->
+  <section class="day-card" id="day2">
+    <div class="day-header">
+      <span class="day-badge">DAY 2</span>
+      <div>
+        <div class="day-title">うどんランチとお買い物</div>
+        <div class="day-date">5月6日（水）</div>
+      </div>
+    </div>
+
+    <ul class="timeline">
+      <li>
+        <span class="time">7:30</span>
+        <div class="activity">
+          <strong>🍳 ホテル朝食（バイキング）</strong>
+        </div>
+      </li>
+      <li>
+        <span class="time">8:30</span>
+        <div class="activity">
+          <strong>チェックアウト → 軽井沢方面へ</strong>
+          <span class="note">R146南下・約60〜70分</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">10:00</span>
+        <div class="activity">
+          <strong>旧軽井沢エリア到着</strong>
+          <span class="note">つるとんたん近く or 旧軽銀座近隣Pへ駐車</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">10:00<br>〜10:50</span>
+        <div class="activity">
+          <strong>🚶 旧軽井沢銀座 ぶらり散歩</strong>
+          <span class="note">ミカドコーヒー、腸詰屋、軽井沢シャーロックなど</span>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">11:00</span>
+        <div class="activity">
+          <strong>🍜 つるとんたん 軽井沢（予約済）</strong>
+          <span class="note">UDON NOODLE Brasserie KARUIZAWA</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">12:30</span>
+        <div class="activity">
+          <strong>アウトレットへ車移動（5〜10分）</strong>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">12:40</span>
+        <div class="activity">
+          <strong>🛍 アウトレット 東駐車場(P1〜P3) 着</strong>
+          <span class="note">ここから役割分担スタート ✨</span>
+        </div>
+      </li>
+      <li>
+        <span class="time">12:45<br>〜16:00</span>
+        <div class="activity">
+          <strong>お買い物 約3時間半</strong>
+          <span class="note">夫：東 → 中央へ一筆書き<br>妻＋子供：西側エリア中心</span>
+        </div>
+      </li>
+      <li class="highlight">
+        <span class="time">16:00</span>
+        <div class="activity">
+          <strong>📍 Center Mall 芝生広場で集合</strong>
+        </div>
+      </li>
+      <li>
+        <span class="time">16:30</span>
+        <div class="activity">
+          <strong>🚗 帰路スタート</strong>
+          <span class="note">逆ルートで宇都宮へ</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- =========== SHOPS =========== -->
+  <section class="day-card" id="shops">
+    <h2 class="section">🛍 アウトレット 役割分担</h2>
+
+    <p style="font-size:0.88rem; color:var(--ink-soft); margin:0 0 16px;">
+      限られた時間で全部回るために、夫は東側のメンズエリアを集中攻略、妻と子供は西側のキッズ＆レディースを巡るのが効率的です。最後はコーチプレイ(TM-08)あたりで合流できます。
+    </p>
+
+    <h3 class="role-title role-husband">👨 夫ルート（東 → 中央 / 約3時間 / 10店）</h3>
+    <table class="shop-table">
+      <thead><tr><th>#</th><th>店舗</th><th>区画</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>NIKE UNITE</td><td><span class="area-tag east">East</span>E-01</td></tr>
+        <tr><td>2</td><td>マッキントッシュ ロンドン／フィロソフィー</td><td><span class="area-tag east">NE</span>13・14</td></tr>
+        <tr><td>3</td><td>ベイクルーズストア アウトレット</td><td><span class="area-tag east">NE</span>15,16,21</td></tr>
+        <tr><td>4</td><td>コーチ ポップアップ</td><td><span class="area-tag east">NE</span>32</td></tr>
+        <tr><td>5</td><td>ビームス アウトレット</td><td><span class="area-tag east">NE</span>31,36-38</td></tr>
+        <tr><td>6</td><td>ステューシー</td><td><span class="area-tag east">NE</span>42·B</td></tr>
+        <tr><td>7</td><td>ユナイテッドアローズ アウトレット</td><td><span class="area-tag">GM</span>20</td></tr>
+        <tr><td>8</td><td>トゥモローランド</td><td><span class="area-tag">GM</span>21</td></tr>
+        <tr><td>9</td><td>カルバン・クライン</td><td><span class="area-tag">CM</span>05</td></tr>
+        <tr><td>10</td><td>コーチ プレイ 軽井沢（合流地点 ✨）</td><td><span class="area-tag tree">TM</span>08</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="role-title role-wife">👩 妻ルート（西側 / 約2時間 / 4店 + 子供同行）</h3>
+    <table class="shop-table">
+      <thead><tr><th>#</th><th>店舗</th><th>区画</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>ジェラピケ／スナイデル／フレイ アイディー</td><td><span class="area-tag tree">TM</span>22</td></tr>
+        <tr><td>2</td><td>ブリーズ（キッズ）</td><td><span class="area-tag west">West</span>W-06</td></tr>
+        <tr><td>3</td><td>靴下屋（タビオ）</td><td>インフォメで場所確認</td></tr>
+        <tr><td>4</td><td>ロペ／アダム エ ロペ</td><td><span class="area-tag west">NW</span>09</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box" style="margin-top:20px;">
+      <strong>💡 動き方のコツ</strong>
+      ・夫は東駐車場から東 → 西へ一筆書き、最後にTM-08で合流<br>
+      ・妻は車降りたらすぐTree Mall方面へ、最後にNW-09<br>
+      ・買い物が増えたら東駐車場の車に一旦荷物整理<br>
+      ・<strong style="color:var(--rose);">16:00 Center Mall芝生広場 集合 📍</strong>
+    </div>
+  </section>
+
+  <div class="divider">✣ ✣ ✣</div>
+
+  <!-- =========== CHECKLIST =========== -->
+  <section class="day-card" id="checklist">
+    <h2 class="section">🎒 持ち物リスト</h2>
+
+    <div class="checklist-title">✓ 必須</div>
+    <ul class="checklist">
+      <li>ホテル予約確認書</li>
+      <li>つるとんたん予約確認</li>
+      <li>おもちゃ王国チケット（事前購入なら）</li>
+      <li>運転免許証・保険証</li>
+      <li>現金 + クレジットカード</li>
+      <li>充電器・モバイルバッテリー</li>
+    </ul>
+
+    <div class="checklist-title">✓ おもちゃ王国向け</div>
+    <ul class="checklist">
+      <li>子供の着替え（汚れ・水遊び対策）</li>
+      <li>タオル数枚</li>
+      <li>帽子・日焼け止め</li>
+      <li>軽い羽織もの（朝晩冷えます）</li>
+      <li>絆創膏・常備薬</li>
+      <li>子供のおやつ・水筒</li>
+    </ul>
+
+    <div class="checklist-title">✓ ホテル泊</div>
+    <ul class="checklist">
+      <li>パジャマ（ホテルにあれば不要）</li>
+      <li>洗面用具・歯ブラシ</li>
+      <li>温泉用の小物（ヘアゴム等）</li>
+    </ul>
+
+    <div class="checklist-title">✓ アウトレット向け</div>
+    <ul class="checklist">
+      <li>大きめのトートバッグ／エコバッグ</li>
+      <li>歩きやすい靴</li>
+      <li>会員カード類（BEAMS, UA等）</li>
+    </ul>
+
+    <div class="rose-box" style="margin-top:20px;">
+      <strong>🌤 5月の軽井沢の気候</strong>
+      朝夕は10度前後、日中は20度近くまで。<strong>脱ぎ着できる服装</strong>がおすすめ。北軽井沢（おもちゃ王国）は標高高めで風があると寒いので、薄手のダウンや羽織りものを忘れずに。
+    </div>
+  </section>
+
+  <!-- =========== CONTACT =========== -->
+  <section class="day-card">
+    <h2 class="section">📞 連絡先</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="name">ホテルグリーンプラザ軽井沢</span>
+        <a href="tel:0279-84-3000">0279-84-3000</a>
+      </div>
+      <div class="contact-item">
+        <span class="name">軽井沢おもちゃ王国</span>
+        <a href="tel:0279-86-3515">0279-86-3515</a>
+      </div>
+      <div class="contact-item">
+        <span class="name">つるとんたん 軽井沢</span>
+        <a href="tel:0267-31-6477">0267-31-6477</a>
+      </div>
+      <div class="contact-item">
+        <span class="name">軽井沢プリンスショッピングプラザ</span>
+        <a href="tel:0267-42-5211">0267-42-5211</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="leaves">🌿 ✿ 🌿</div>
+  <div class="heart mincho">素敵な家族旅行になりますように</div>
+  <small>2026.5.4 作成</small>
+</footer>
+
+</body>
+</html>
