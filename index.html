@@ -116,8 +116,8 @@
   /* ============ NAV ============ */
   .quick-nav {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
     margin: -56px -4px 32px;
     padding: 0 16px;
     position: relative;
@@ -447,6 +447,86 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* ============ MAP CARDS ============ */
+  .map-list {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .map-link-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .map-link-card:hover, .map-link-card:active {
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent-glow);
+  }
+  .map-link-card .pin {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    border-radius: 10px;
+  }
+  .map-link-card .info {
+    flex: 1;
+    min-width: 0;
+  }
+  .map-link-card .name {
+    display: block;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+  .map-link-card .addr {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .map-link-card .arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .map-external {
+    display: block;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #f3ecdf 100%);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--accent-deep);
+    font-weight: 700;
+    text-align: center;
+    margin: 8px 0;
+    border: 1px solid var(--accent-glow);
+    font-size: 0.92rem;
+    transition: transform 0.15s;
+  }
+  .map-external:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .map-external .ext-icon {
+    margin-right: 6px;
+  }
+
   /* ============ FOOTER ============ */
   footer {
     text-align: center;
@@ -480,8 +560,9 @@
   @media (max-width: 480px) {
     header { padding: 40px 16px 70px; }
     header h1 { font-size: 1.7rem; }
-    .quick-nav { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .quick-nav a { font-size: 0.72rem; padding: 12px 4px; }
+    .quick-nav { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .quick-nav a { font-size: 0.65rem; padding: 10px 2px; }
+    .quick-nav .icon { font-size: 1.2rem; }
     .day-card { padding: 24px 18px; }
     .day-title { font-size: 1.2rem; }
     .timeline::before { left: 56px; }
@@ -508,6 +589,7 @@
     <a href="#day1"><span class="icon">🎢</span>1日目</a>
     <a href="#day2"><span class="icon">🛍</span>2日目</a>
     <a href="#shops"><span class="icon">🛒</span>お店</a>
+    <a href="#maps"><span class="icon">🗺</span>地図</a>
     <a href="#checklist"><span class="icon">🎒</span>持ち物</a>
   </nav>
 
@@ -634,29 +716,39 @@
       ・<strong>お部屋エリアはお昼寝＆休憩拠点</strong>として午後早めに使うのが◎
     </div>
 
-    <h2 class="section" style="margin-top:24px;">🎠 娘さん（2歳3ヶ月）が乗れる乗り物</h2>
+    <h2 class="section" style="margin-top:24px;">🎠 アトラクション全12種 一覧</h2>
     <p style="font-size:0.85rem; color:var(--ink-soft); margin:4px 0 12px;">
-      0歳～5歳は保護者の付き添いが必要（=ママ・パパも一緒に乗る）。フリーパスで★は乗り放題。
+      乗り物名タップで公式ページへ。0〜5歳は保護者の付添（有料）必須＝ママ・パパも同乗。<br>
+      <strong>娘さん列：</strong>◎=超おすすめ／○=乗れる／△=怖がるかも
     </p>
-    <table class="shop-table">
-      <thead><tr><th>#</th><th>乗り物</th><th>備考</th></tr></thead>
+    <table class="shop-table" style="font-size:0.83rem;">
+      <thead><tr><th style="width:36%;">乗り物</th><th>対象</th><th>娘<br>(2y3m)</th><th>メモ</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td><strong>大観覧車 ★</strong></td><td>高さ65m、1周15分の空中散歩</td></tr>
-        <tr><td>2</td><td><strong>パノラマゴンドラ ★</strong></td><td>透明ゴンドラで景色を満喫</td></tr>
-        <tr><td>3</td><td><strong>メリーゴーランド ★</strong></td><td>定番！付添で安心</td></tr>
-        <tr><td>4</td><td><strong>GO!GO!キッズトレイン ★</strong></td><td>0歳〜OK、観覧車の下を走る</td></tr>
-        <tr><td>5</td><td><strong>SL型アトラクション ★</strong></td><td>本格SL、約12分のコース</td></tr>
-        <tr><td>6</td><td><strong>王様電車 ★</strong></td><td>かわいい電車</td></tr>
-        <tr><td>7</td><td><strong>リンドバーグ ★</strong></td><td>コースター系、110cm未満は付添で<strong>足の出ないライド</strong>に乗る</td></tr>
-        <tr><td>8</td><td><strong>ゴーカート ★</strong></td><td>娘は助手席（運転は中学生以上）</td></tr>
-        <tr><td>9</td><td>バッテリーカー</td><td>1歳〜OK、フリーパス対象外（¥200/回）</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/ferriswheel/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">大観覧車 ↗</a></td><td>0歳〜</td><td>◎</td><td>高さ65m / 1周15分。浅間山ビュー</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/gondola/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">パノラマゴンドラ ↗</a></td><td>0歳〜</td><td>◎</td><td>透明床ゴンドラ。景色が抜群</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/merrygoround/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">メリーゴーランド ↗</a></td><td>2歳〜<br>(付添で0歳〜)</td><td>◎</td><td>定番中の定番。3歳から1人乗りも可</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/kidstrain/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">GO!GO!キッズトレイン ↗</a></td><td>0歳〜</td><td>◎</td><td>自分で操作できる電車。観覧車の下を走る</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">SLキングダム ↗</a></td><td>0歳〜</td><td>◎</td><td>本格SL型。約12分のコース、自然を眺めながら</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/thomas/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">レッツゴートーマス・パーシー ↗</a></td><td>0歳〜</td><td>◎</td><td>機関車トーマスのライド</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/treasure/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">ちびっこ宝島 ↗</a></td><td>1歳〜</td><td>○</td><td>丸太イカダをハンドルで揺らす</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/airbicycle/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">空中自転車 ↗</a></td><td>0歳〜<br>(130cm以上で1人OK)</td><td>○</td><td>自転車漕いで空中散歩。少し高所</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/lindberg/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">リンドバーグ ↗</a></td><td>1歳〜</td><td>△</td><td>小型コースター系。110cm未満は足の出ないライドに</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/coaster/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">ドラゴンコースター ↗</a></td><td>2歳〜<br>(110cm未満付添)</td><td>△</td><td>最高3.37m＋水平ループ2回。娘の様子見て</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/gokart/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">ゴーカート ↗</a></td><td>2歳〜<br>(小6まで保護者運転)</td><td>○</td><td>娘は助手席。パパが運転</td></tr>
+        <tr><td><a href="https://www.omochaoukoku.com/karuizawa/attraction/batterycar/" target="_blank" rel="noopener" style="color:var(--accent-deep); font-weight:700;">バッテリーカー ↗</a> <span style="color:var(--rose); font-size:0.78rem;">※有料</span></td><td>1歳〜</td><td>○</td><td>フリーパス対象外（¥200/回）</td></tr>
       </tbody>
     </table>
 
+    <a class="map-external" href="https://www.omochaoukoku.com/karuizawa/attraction/" target="_blank" rel="noopener" style="margin-top:8px;">
+      <span class="ext-icon">🎢</span>アトラクション 公式総合ページ →
+    </a>
+
     <div class="rose-box" style="margin-top:12px;">
-      <strong>💡 おすすめ攻略順</strong>
-      娘さんが特に喜びそうなのは <strong>メリーゴーランド・キッズトレイン・観覧車</strong> の3つ。<br>
-      まずこの定番3つを朝イチで体験 → 反応見て他を追加 → 午後に「もう一回乗りたい！」となった乗り物にリピート、が王道。
+      <strong>💡 攻略のコツ</strong>
+      ・<strong>◎の6つは外さない定番</strong>：観覧車、パノラマゴンドラ、メリーゴー、キッズトレイン、SL、トーマス<br>
+      ・娘さんの<strong>当たり乗り物を午前中に見極めて</strong>、午後にリピート<br>
+      ・<strong>△の2つ（リンドバーグ・ドラゴンコースター）</strong>は娘の反応次第。怖がったら無理せず<br>
+      ・<strong>○の4つ</strong>は時間と娘の体力次第で
     </div>
 
     <div class="warn-box" style="margin-top:12px;">
@@ -804,6 +896,74 @@
   </section>
 
   <div class="divider">✣ ✣ ✣</div>
+
+  <!-- =========== MAPS =========== -->
+  <section class="day-card" id="maps">
+    <h2 class="section">🗺 マップ・ナビ</h2>
+
+    <p style="font-size:0.85rem; color:var(--ink-soft); margin:4px 0 12px;">
+      タップでGoogle Mapsが開きます（スマホはMapsアプリ起動）。
+    </p>
+
+    <h3 style="font-size:1rem; color:var(--accent-deep); margin:16px 0 10px;">📍 主要スポット</h3>
+    <div class="map-list">
+      <a class="map-link-card" href="https://www.google.com/maps/search/?api=1&query=%E5%A4%AA%E7%94%B0%E5%BC%B7%E6%88%B8PA+%E4%B8%8B%E3%82%8A" target="_blank" rel="noopener">
+        <span class="pin">☕</span>
+        <div class="info">
+          <span class="name">太田強戸PA（下り）</span>
+          <span class="addr">朝食休憩ポイント</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+      <a class="map-link-card" href="https://www.google.com/maps/search/?api=1&query=%E8%BB%BD%E4%BA%95%E6%B2%A2%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83%E7%8E%8B%E5%9B%BD" target="_blank" rel="noopener">
+        <span class="pin">🎢</span>
+        <div class="info">
+          <span class="name">軽井沢おもちゃ王国</span>
+          <span class="addr">嬬恋村大前細原1497-84</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+      <a class="map-link-card" href="https://www.google.com/maps/search/?api=1&query=%E3%83%9B%E3%83%86%E3%83%AB%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3%E3%83%97%E3%83%A9%E3%82%B6%E8%BB%BD%E4%BA%95%E6%B2%A2" target="_blank" rel="noopener">
+        <span class="pin">🏨</span>
+        <div class="info">
+          <span class="name">ホテルグリーンプラザ軽井沢</span>
+          <span class="addr">おもちゃ王国 隣接</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+      <a class="map-link-card" href="https://www.google.com/maps/search/?api=1&query=%E3%81%A4%E3%82%8B%E3%81%A8%E3%82%93%E3%81%9F%E3%82%93+%E8%BB%BD%E4%BA%95%E6%B2%A2" target="_blank" rel="noopener">
+        <span class="pin">🍜</span>
+        <div class="info">
+          <span class="name">つるとんたん 軽井沢</span>
+          <span class="addr">旧軽井沢813-10（11:00予約済）</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+      <a class="map-link-card" href="https://www.google.com/maps/search/?api=1&query=%E8%BB%BD%E4%BA%95%E6%B2%A2%E3%83%97%E3%83%AA%E3%83%B3%E3%82%B9%E3%82%B7%E3%83%A7%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0%E3%83%97%E3%83%A9%E3%82%B6" target="_blank" rel="noopener">
+        <span class="pin">🛍</span>
+        <div class="info">
+          <span class="name">軽井沢プリンスショッピングプラザ</span>
+          <span class="addr">軽井沢駅南口直結</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <h3 style="font-size:1rem; color:var(--accent-deep); margin:24px 0 10px;">📋 詳細マップ</h3>
+    <a class="map-external" href="https://www.omochaoukoku.com/karuizawa/map/" target="_blank" rel="noopener">
+      <span class="ext-icon">🎢</span>軽井沢おもちゃ王国 公式 園内マップ →
+    </a>
+    <a class="map-external" href="https://www.karuizawa-psp.jp/floormap/" target="_blank" rel="noopener">
+      <span class="ext-icon">🛍</span>プリンスショッピングプラザ 公式フロアマップ →
+    </a>
+
+    <div class="info-box" style="margin-top:16px;">
+      <strong>💡 ナビ起動のコツ</strong>
+      ・カーナビ目的地は<strong>「ホテルグリーンプラザ軽井沢」</strong>設定が確実<br>
+      ・軽井沢内の移動はGoogle Maps推奨（GW中の混雑回避ルート提案あり）<br>
+      ・園内・アウトレットは<strong>公式マップを保存</strong>しておくと圏外でも安心
+    </div>
+  </section>
 
   <!-- =========== CHECKLIST =========== -->
   <section class="day-card" id="checklist">
