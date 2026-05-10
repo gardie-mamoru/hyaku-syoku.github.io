@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>思い出ムービー｜写真とエピソードから動画を作る</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf6ef;
+    --bg-2: #f3ecdf;
+    --card: #ffffff;
+    --ink: #3d3a2f;
+    --ink-soft: #6b6557;
+    --accent: #6b8e4e;
+    --accent-deep: #4a6b35;
+    --accent-light: #e8efd9;
+    --rose: #c97a8a;
+    --gold: #c89968;
+    --line: #e6dec9;
+    --shadow: 0 4px 16px rgba(74, 107, 53, 0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Zen Maru Gothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+    background:
+      radial-gradient(at top right, #e8efd9 0%, transparent 40%),
+      radial-gradient(at bottom left, #f5e3e7 0%, transparent 40%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    text-align: center;
+    padding: 56px 24px 48px;
+    background: linear-gradient(135deg, #6b8e4e 0%, #8ba968 50%, #a8c084 100%);
+    color: white;
+  }
+  header h1 {
+    font-family: "Shippori Mincho", "Yu Mincho", serif;
+    font-size: 2rem;
+    margin: 0 0 8px;
+    letter-spacing: 0.1em;
+  }
+  header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+  .container { max-width: 800px; margin: 0 auto; padding: 32px 16px 64px; }
+  .step {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .step h2 {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.2rem;
+    margin: 0 0 16px;
+    color: var(--accent-deep);
+    border-bottom: 2px solid var(--accent-light);
+    padding-bottom: 8px;
+  }
+  input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: inherit;
+    color: inherit;
+    background: var(--bg);
+    margin-bottom: 8px;
+  }
+  textarea { min-height: 60px; resize: vertical; }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+  }
+  label {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover:not(:disabled) { background: var(--accent-deep); }
+  button:disabled { background: #b5b5b5; cursor: not-allowed; }
+  button.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover:not(:disabled) {
+    background: var(--accent-light);
+    color: var(--accent-deep);
+    border-color: var(--accent-light);
+  }
+
+  #dropZone {
+    border: 2px dashed var(--accent);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    color: var(--ink-soft);
+    background: var(--accent-light);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #dropZone:hover, #dropZone.drag { background: #d8e5c0; }
+
+  #photoList { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .photo-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .photo-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .photo-item > div { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .photo-item textarea { margin: 0; }
+  .photo-controls { display: flex; gap: 6px; }
+
+  #scriptOutput { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .script-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px;
+    background: var(--bg);
+    border-radius: 6px;
+  }
+  .script-item img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .script-item > div { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .script-item input[type="text"] { margin: 0; }
+  .duration-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .duration-row input[type="range"] { flex: 1; }
+
+  #previewCanvas {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  #downloadLink {
+    display: inline-block;
+    margin-left: 12px;
+    color: var(--accent-deep);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .progress {
+    height: 6px;
+    background: var(--accent-light);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.15s;
+    width: 0;
+  }
+
+  .note {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    background: #f7f3e8;
+    padding: 10px 14px;
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    margin: 12px 0 0;
+  }
+  .note a { color: var(--accent-deep); }
+
+  #scriptStatus {
+    font-size: 0.9rem;
+    color: var(--accent-deep);
+    margin: 8px 0;
+    min-height: 1.4em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>思い出ムービー</h1>
+  <p>写真とエピソードから、Claude が台本を書いて動画にします</p>
+</header>
+
+<main class="container">
+
+  <section class="step">
+    <h2>1. Claude API キー</h2>
+    <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off">
+    <label>
+      <input type="checkbox" id="rememberKey">
+      このブラウザに保存する（自分の端末のみ。共用 PC では非推奨）
+    </label>
+    <p class="note">
+      キーは <a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic Console</a> で取得できます。
+      送信先は <code>api.anthropic.com</code> のみで、サーバーには保存されません。
+    </p>
+  </section>
+
+  <section class="step">
+    <h2>2. 写真とエピソード</h2>
+    <div id="dropZone">写真をドラッグ＆ドロップ、またはクリックして選択（複数可）</div>
+    <input type="file" id="fileInput" accept="image/*" multiple hidden>
+    <div id="photoList"></div>
+  </section>
+
+  <section class="step">
+    <h2>3. 台本生成</h2>
+    <input type="text" id="title" placeholder="動画のタイトル（例：軽井沢家族旅行 2026.5）">
+    <button id="generateScript">Claude に台本を書いてもらう</button>
+    <div id="scriptStatus"></div>
+    <div id="scriptOutput"></div>
+  </section>
+
+  <section class="step">
+    <h2>4. 動画書き出し</h2>
+    <canvas id="previewCanvas" width="1280" height="720"></canvas>
+    <button id="generateVideo">動画を作る</button>
+    <a id="downloadLink" hidden></a>
+    <div class="progress" id="videoProgress" hidden><div class="progress-bar"></div></div>
+    <p class="note">
+      出力は WebM 形式です。書き出し中はこのタブを前面にしておいてください（バックグラウンドだと描画が止まります）。
+      SNS 投稿用に MP4 が必要なときは別途変換ツールをご利用ください。
+    </p>
+  </section>
+
+</main>
+
+<script>
+const state = {
+  photos: [],   // {id, dataUrl, mediaType, episode, caption, durationSec}
+  apiKey: '',
+  title: '',
+};
+
+// ---------- API key ----------
+const apiKeyInput = document.getElementById('apiKey');
+const rememberKey = document.getElementById('rememberKey');
+const savedKey = localStorage.getItem('claude_api_key');
+if (savedKey) {
+  apiKeyInput.value = savedKey;
+  rememberKey.checked = true;
+  state.apiKey = savedKey;
+}
+apiKeyInput.addEventListener('input', () => {
+  state.apiKey = apiKeyInput.value.trim();
+  if (rememberKey.checked) localStorage.setItem('claude_api_key', state.apiKey);
+});
+rememberKey.addEventListener('change', () => {
+  if (rememberKey.checked) localStorage.setItem('claude_api_key', state.apiKey);
+  else localStorage.removeItem('claude_api_key');
+});
+
+// ---------- Photo upload ----------
+const fileInput = document.getElementById('fileInput');
+const dropZone = document.getElementById('dropZone');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => {
+  handleFiles(e.target.files);
+  e.target.value = '';
+});
+
+async function handleFiles(files) {
+  for (const file of files) {
+    if (!file.type.startsWith('image/')) continue;
+    try {
+      const dataUrl = await resizeImageToDataUrl(file, 1568);
+      state.photos.push({
+        id: crypto.randomUUID(),
+        dataUrl,
+        mediaType: 'image/jpeg',
+        episode: '',
+        caption: '',
+        durationSec: 4,
+      });
+    } catch (err) {
+      console.error('読み込み失敗:', file.name, err);
+    }
+  }
+  renderPhotoList();
+}
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+async function resizeImageToDataUrl(file, maxDim) {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await loadImage(url);
+    const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+    const w = Math.round(img.width * scale);
+    const h = Math.round(img.height * scale);
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+    return canvas.toDataURL('image/jpeg', 0.85);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function renderPhotoList() {
+  const list = document.getElementById('photoList');
+  list.innerHTML = '';
+  state.photos.forEach((photo, idx) => {
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+
+    const img = document.createElement('img');
+    img.src = photo.dataUrl;
+    item.appendChild(img);
+
+    const right = document.createElement('div');
+
+    const ta = document.createElement('textarea');
+    ta.placeholder = `写真 ${idx + 1} のエピソード（任意・メモ程度でOK）`;
+    ta.value = photo.episode;
+    ta.addEventListener('input', () => { photo.episode = ta.value; });
+    right.appendChild(ta);
+
+    const controls = document.createElement('div');
+    controls.className = 'photo-controls';
+
+    const upBtn = document.createElement('button');
+    upBtn.className = 'ghost';
+    upBtn.textContent = '↑';
+    upBtn.disabled = idx === 0;
+    upBtn.addEventListener('click', () => movePhoto(idx, -1));
+    controls.appendChild(upBtn);
+
+    const downBtn = document.createElement('button');
+    downBtn.className = 'ghost';
+    downBtn.textContent = '↓';
+    downBtn.disabled = idx === state.photos.length - 1;
+    downBtn.addEventListener('click', () => movePhoto(idx, +1));
+    controls.appendChild(downBtn);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'ghost';
+    removeBtn.textContent = '削除';
+    removeBtn.addEventListener('click', () => {
+      state.photos.splice(idx, 1);
+      renderPhotoList();
+    });
+    controls.appendChild(removeBtn);
+
+    right.appendChild(controls);
+    item.appendChild(right);
+    list.appendChild(item);
+  });
+}
+
+function movePhoto(idx, delta) {
+  const target = idx + delta;
+  if (target < 0 || target >= state.photos.length) return;
+  const [p] = state.photos.splice(idx, 1);
+  state.photos.splice(target, 0, p);
+  renderPhotoList();
+}
+
+// ---------- Generate script via Claude ----------
+const generateScriptBtn = document.getElementById('generateScript');
+const scriptStatus = document.getElementById('scriptStatus');
+
+generateScriptBtn.addEventListener('click', async () => {
+  if (!state.apiKey) { alert('API キーを入力してください'); return; }
+  if (state.photos.length === 0) { alert('写真を 1 枚以上追加してください'); return; }
+
+  state.title = document.getElementById('title').value.trim() || '思い出';
+
+  generateScriptBtn.disabled = true;
+  generateScriptBtn.textContent = '生成中...';
+  scriptStatus.textContent = 'Claude が写真を見て台本を考えています...';
+
+  try {
+    const content = [{
+      type: 'text',
+      text:
+`あなたは思い出のスライドショー動画の脚本家です。
+動画タイトルは「${state.title}」、写真は ${state.photos.length} 枚あります。
+
+各写真について、画面下部に表示する短いキャプション（20〜40 文字程度の日本語、温かみのある語り口、過剰な装飾語は避ける）と、表示秒数（3〜6 秒、エピソードが長ければ少し長めに）を考えてください。
+写真の中身そのものも見て、ユーザーのエピソードメモと自然に響き合うキャプションにしてください。エピソードメモが空欄の写真は、写真の様子だけを手がかりに考えてください。
+キャプションは時系列のつながりも意識し、動画全体として 1 つの物語になるようにしてください。`
+    }];
+
+    state.photos.forEach((photo, idx) => {
+      content.push({
+        type: 'image',
+        source: {
+          type: 'base64',
+          media_type: photo.mediaType,
+          data: photo.dataUrl.split(',')[1],
+        },
+      });
+      content.push({
+        type: 'text',
+        text: `↑ 写真${idx + 1}。エピソードメモ: ${photo.episode || '(なし)'}`,
+      });
+    });
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': state.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-7',
+        max_tokens: 4000,
+        messages: [{ role: 'user', content }],
+        output_config: {
+          format: {
+            type: 'json_schema',
+            schema: {
+              type: 'object',
+              properties: {
+                slides: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      caption: { type: 'string' },
+                      durationSec: { type: 'number' },
+                    },
+                    required: ['caption', 'durationSec'],
+                    additionalProperties: false,
+                  },
+                },
+              },
+              required: ['slides'],
+              additionalProperties: false,
+            },
+          },
+        },
+      }),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`API ${res.status}: ${errText}`);
+    }
+
+    const data = await res.json();
+    const textBlock = data.content.find(b => b.type === 'text');
+    if (!textBlock) throw new Error('テキスト応答が含まれていません');
+
+    const parsed = JSON.parse(textBlock.text);
+    parsed.slides.forEach((slide, idx) => {
+      if (state.photos[idx]) {
+        state.photos[idx].caption = slide.caption;
+        state.photos[idx].durationSec = Math.max(2, Math.min(10, slide.durationSec));
+      }
+    });
+
+    renderScriptOutput();
+    scriptStatus.textContent = '完了。下で内容を編集できます。';
+  } catch (err) {
+    scriptStatus.textContent = '';
+    alert('エラー: ' + err.message);
+  } finally {
+    generateScriptBtn.disabled = false;
+    generateScriptBtn.textContent = 'Claude に台本を書いてもらう';
+  }
+});
+
+function renderScriptOutput() {
+  const out = document.getElementById('scriptOutput');
+  out.innerHTML = '';
+  state.photos.forEach((photo, idx) => {
+    const item = document.createElement('div');
+    item.className = 'script-item';
+
+    const img = document.createElement('img');
+    img.src = photo.dataUrl;
+    item.appendChild(img);
+
+    const right = document.createElement('div');
+
+    const captionInput = document.createElement('input');
+    captionInput.type = 'text';
+    captionInput.value = photo.caption;
+    captionInput.placeholder = `写真 ${idx + 1} のキャプション`;
+    captionInput.addEventListener('input', () => { photo.caption = captionInput.value; });
+    right.appendChild(captionInput);
+
+    const durRow = document.createElement('div');
+    durRow.className = 'duration-row';
+    const durSpan = document.createElement('span');
+    durSpan.textContent = `${photo.durationSec.toFixed(1)} 秒`;
+    durSpan.style.minWidth = '4em';
+    const durRange = document.createElement('input');
+    durRange.type = 'range';
+    durRange.min = '2';
+    durRange.max = '10';
+    durRange.step = '0.5';
+    durRange.value = photo.durationSec;
+    durRange.addEventListener('input', () => {
+      photo.durationSec = parseFloat(durRange.value);
+      durSpan.textContent = `${photo.durationSec.toFixed(1)} 秒`;
+    });
+    durRow.appendChild(durSpan);
+    durRow.appendChild(durRange);
+    right.appendChild(durRow);
+
+    item.appendChild(right);
+    out.appendChild(item);
+  });
+}
+
+// ---------- Generate video ----------
+const generateVideoBtn = document.getElementById('generateVideo');
+const previewCanvas = document.getElementById('previewCanvas');
+const downloadLink = document.getElementById('downloadLink');
+const videoProgress = document.getElementById('videoProgress');
+const videoProgressBar = videoProgress.querySelector('.progress-bar');
+
+generateVideoBtn.addEventListener('click', async () => {
+  if (state.photos.length === 0) { alert('写真がありません'); return; }
+  if (!('MediaRecorder' in window)) { alert('お使いのブラウザは MediaRecorder に対応していません'); return; }
+
+  generateVideoBtn.disabled = true;
+  generateVideoBtn.textContent = '書き出し中...';
+  downloadLink.hidden = true;
+  videoProgress.hidden = false;
+  videoProgressBar.style.width = '0%';
+
+  try {
+    // フォントの読み込みを待つ（Canvas は即時にフォールバックフォントを使うため）
+    if (document.fonts) {
+      try {
+        await Promise.all([
+          document.fonts.load('600 72px "Shippori Mincho"'),
+          document.fonts.load('500 36px "Zen Maru Gothic"'),
+        ]);
+      } catch {}
+    }
+
+    const ctx = previewCanvas.getContext('2d');
+
+    const stream = previewCanvas.captureStream(30);
+    let mime = 'video/webm;codecs=vp9';
+    if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm;codecs=vp8';
+    if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
+
+    const recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 4_500_000 });
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    const stopPromise = new Promise(resolve => {
+      recorder.onstop = () => resolve(new Blob(chunks, { type: 'video/webm' }));
+    });
+
+    recorder.start();
+
+    const images = await Promise.all(state.photos.map(p => loadImage(p.dataUrl)));
+
+    const titleSec = 2.5;
+    const fadeOutSec = 1.2;
+    const totalSec = titleSec + state.photos.reduce((s, p) => s + p.durationSec, 0) + fadeOutSec;
+    let elapsedBase = 0;
+    const updateProgress = (currentSec) => {
+      const pct = Math.min(100, ((elapsedBase + currentSec) / totalSec) * 100);
+      videoProgressBar.style.width = `${pct}%`;
+    };
+
+    await renderTitle(ctx, previewCanvas, state.title, titleSec, updateProgress);
+    elapsedBase += titleSec;
+
+    for (let i = 0; i < state.photos.length; i++) {
+      const photo = state.photos[i];
+      const dir = i % 2 === 0 ? 1 : -1;  // Ken Burns の方向を交互に
+      await renderSlide(ctx, previewCanvas, images[i], photo.caption, photo.durationSec, dir, updateProgress);
+      elapsedBase += photo.durationSec;
+    }
+
+    await fadeBlack(ctx, previewCanvas, fadeOutSec, updateProgress);
+    videoProgressBar.style.width = '100%';
+
+    recorder.stop();
+    const blob = await stopPromise;
+
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = `${state.title || 'omoide'}.webm`;
+    downloadLink.textContent = `📥 ${(blob.size / 1024 / 1024).toFixed(1)}MB の動画をダウンロード`;
+    downloadLink.hidden = false;
+  } catch (err) {
+    alert('エラー: ' + err.message);
+  } finally {
+    generateVideoBtn.disabled = false;
+    generateVideoBtn.textContent = '動画を作る';
+    setTimeout(() => { videoProgress.hidden = true; }, 1000);
+  }
+});
+
+function frame() {
+  return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
+async function renderTitle(ctx, canvas, title, durationSec, onProgress) {
+  const start = performance.now();
+  while (true) {
+    const elapsed = (performance.now() - start) / 1000;
+    if (elapsed >= durationSec) break;
+    const t = elapsed / durationSec;
+
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    grad.addColorStop(0, '#4a6b35');
+    grad.addColorStop(1, '#8ba968');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const alpha = t < 0.25 ? t / 0.25 : (t > 0.85 ? Math.max(0, (1 - t) / 0.15) : 1);
+    const yOffset = (1 - Math.min(t * 3, 1)) * 30;
+
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = '#faf6ef';
+    ctx.font = '600 72px "Shippori Mincho", "Yu Mincho", serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    drawWrappedText(ctx, title, canvas.width / 2, canvas.height / 2 - yOffset, canvas.width - 200, 90);
+    ctx.globalAlpha = 1;
+
+    if (onProgress) onProgress(elapsed);
+    await frame();
+  }
+}
+
+async function renderSlide(ctx, canvas, img, caption, durationSec, kenBurnsDir, onProgress) {
+  const start = performance.now();
+  const baseScale = Math.max(canvas.width / img.width, canvas.height / img.height);
+  const zoomStart = 1.0;
+  const zoomEnd = 1.12;
+  const panX = 60 * kenBurnsDir;
+
+  while (true) {
+    const elapsed = (performance.now() - start) / 1000;
+    if (elapsed >= durationSec) break;
+    const t = elapsed / durationSec;
+
+    const zoom = zoomStart + (zoomEnd - zoomStart) * t;
+    const scale = baseScale * zoom;
+    const w = img.width * scale;
+    const h = img.height * scale;
+    const x = (canvas.width - w) / 2 + panX * (t - 0.5) * 2;
+    const y = (canvas.height - h) / 2;
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const fadeIn = Math.min(t / 0.15, 1);
+    const fadeOut = Math.min((1 - t) / 0.15, 1);
+    const alpha = Math.min(fadeIn, fadeOut);
+
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, x, y, w, h);
+
+    if (caption) {
+      const grad = ctx.createLinearGradient(0, canvas.height - 240, 0, canvas.height);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.75)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, canvas.height - 240, canvas.width, 240);
+
+      ctx.fillStyle = '#faf6ef';
+      ctx.font = '500 36px "Zen Maru Gothic", "Hiragino Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      drawWrappedText(ctx, caption, canvas.width / 2, canvas.height - 80, canvas.width - 160, 48);
+    }
+    ctx.globalAlpha = 1;
+
+    if (onProgress) onProgress(elapsed);
+    await frame();
+  }
+}
+
+async function fadeBlack(ctx, canvas, durationSec, onProgress) {
+  const start = performance.now();
+  const snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  while (true) {
+    const elapsed = (performance.now() - start) / 1000;
+    if (elapsed >= durationSec) break;
+    const t = elapsed / durationSec;
+    ctx.putImageData(snapshot, 0, 0);
+    ctx.fillStyle = `rgba(0, 0, 0, ${t})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (onProgress) onProgress(elapsed);
+    await frame();
+  }
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+  // Greedy 文字単位ラップ（日本語向け）
+  const lines = [];
+  let current = '';
+  for (const ch of text) {
+    if (ch === '\n') {
+      lines.push(current);
+      current = '';
+      continue;
+    }
+    const test = current + ch;
+    if (ctx.measureText(test).width > maxWidth && current) {
+      lines.push(current);
+      current = ch;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+
+  const totalH = lines.length * lineHeight;
+  const startY = y - totalH / 2 + lineHeight / 2;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, x, startY + i * lineHeight);
+  });
+}
+</script>
+</body>
+</html>
