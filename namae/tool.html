@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>姓名判断ツール｜名づけ帖</title>
+<meta name="description" content="姓名を入れるだけで五格（天格・人格・地格・外格・総格）の吉凶と五行の三才配置を自動計算。無料・登録不要。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="./index.html"><span class="seal mincho">名</span>名づけ帖</a>
+  <nav class="nav">
+    <a href="./tool.html">姓名判断ツール</a>
+    <a href="./basics.html">五格の基礎</a>
+    <a href="./strokes.html">81画一覧</a>
+    <a href="./story.html">命名ストーリー</a>
+    <a class="btn-mini" href="./tool.html">無料で診断</a>
+  </nav>
+</div></header>
+
+<main class="wrap" style="padding-top:32px;padding-bottom:24px;">
+  <div class="tool-shell">
+    <div class="section-head" style="margin-top:8px;">
+      <h2 class="mincho">姓名判断ツール</h2>
+      <p>姓名を入力すると、五格の吉凶と五行の三才配置を計算します。</p>
+    </div>
+
+    <div class="tool-card">
+      <div class="field-row">
+        <div class="field">
+          <label for="in-sei">姓（名字）<span class="hint"> 例：木村</span></label>
+          <input type="text" id="in-sei" placeholder="木村" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="in-mei">名（なまえ）<span class="hint"> 例：哉太</span></label>
+          <input type="text" id="in-mei" placeholder="哉太" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <label for="in-yomi">読み <span class="hint">（任意・表示用）</span></label>
+        <input type="text" id="in-yomi" placeholder="きむら かなた" autocomplete="off"
+               style="font-size:1rem;font-family:inherit;">
+      </div>
+
+      <div id="manual-area"></div>
+
+      <div class="center" style="margin-top:14px;">
+        <button class="btn btn-primary" id="calc-btn">この名前を診断する →</button>
+      </div>
+
+      <div class="center" style="margin-top:16px;font-size:.84rem;color:var(--ink-faint);">
+        お試し：
+        <a href="#" data-sample="木村|哉太|きむら かなた">木村 哉太</a> ／
+        <a href="#" data-sample="佐藤|心乃助|さとう しんのすけ">佐藤 心乃助</a> ／
+        <a href="#" data-sample="鈴木|奏太|すずき かなた">鈴木 奏太</a>
+      </div>
+    </div>
+
+    <!-- 結果 -->
+    <div class="tool-card result" id="result">
+      <div id="name-display" class="name-display"></div>
+      <div id="name-reading" class="name-reading"></div>
+
+      <div class="gokaku-grid" id="gokaku-grid"></div>
+      <p class="center" id="rei-note" style="font-size:.82rem;color:var(--ink-faint);margin:6px 0 0;"></p>
+
+      <div class="summary-box" id="verdict"></div>
+      <div class="sanzai" id="sanzai"></div>
+
+      <div class="gokaku-detail" id="gokaku-detail"></div>
+
+      <div class="disclaimer">
+        ※ 画数は辞書（標準＝新字体）に基づきます。姓名判断の伝統流派では旧字体（康熙字典体）で数えるため、字によっては画数が変わります（詳しくは
+        <a href="./basics.html#kyuji">五格の基礎</a> を参照）。本判定は熊崎式をベースにした一例で、運勢を断定するものではありません。
+      </div>
+    </div>
+
+    <p class="center" style="margin-top:24px;">
+      <a class="btn btn-ghost" href="./story.html">画数の先へ — 意味と物語で名前を選ぶ →</a>
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="wrap">
+  <div>
+    <div class="brand mincho"><span class="seal">名</span>名づけ帖</div>
+    <div style="font-size:.88rem;">姓名判断と、名前に込める物語のメディア。</div>
+  </div>
+  <div class="fnav">
+    <a href="./tool.html">姓名判断ツール</a>
+    <a href="./basics.html">五格の基礎</a>
+    <a href="./strokes.html">81画一覧</a>
+    <a href="./story.html">命名ストーリー</a>
+  </div>
+  <small>※ 姓名判断は古くからの慣習であり、運勢や人生を断定するものではありません。&copy; 2026 名づけ帖</small>
+</div></footer>
+
+<script src="./assets/data.js"></script>
+<script src="./assets/tool.js"></script>
+</body>
+</html>

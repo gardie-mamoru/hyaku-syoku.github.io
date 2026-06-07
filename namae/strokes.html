@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>81画 吉凶一覧｜名づけ帖</title>
+<meta name="description" content="姓名判断における1〜81画それぞれの吉凶と象意を一覧で。名前の画数を考えるリファレンスに。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="./index.html"><span class="seal mincho">名</span>名づけ帖</a>
+  <nav class="nav">
+    <a href="./tool.html">姓名判断ツール</a>
+    <a href="./basics.html">五格の基礎</a>
+    <a href="./strokes.html">81画一覧</a>
+    <a href="./story.html">命名ストーリー</a>
+    <a class="btn-mini" href="./tool.html">無料で診断</a>
+  </nav>
+</div></header>
+
+<main class="narrow">
+  <article class="article">
+    <h1 class="mincho">81画 吉凶一覧</h1>
+    <div class="meta">DATA ・ 熊崎式ベース</div>
+
+    <p>姓名判断では、五格それぞれの画数を1〜81の吉凶に当てはめて判定します。下の一覧は、各画数の吉凶区分と象意（キーワード）です。色をタップ／クリックすると、その数の意味を確認できます。</p>
+
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 4px;font-size:.85rem;">
+      <span><span class="gbadge b-daikichi">大吉</span></span>
+      <span><span class="gbadge b-kichi">吉</span></span>
+      <span><span class="gbadge b-hankichi">半吉</span></span>
+      <span><span class="gbadge b-kyou">凶</span></span>
+    </div>
+
+    <div class="luck-grid" id="luck-grid"></div>
+
+    <div class="callout" id="luck-detail" style="display:none;">
+      <b id="ld-num"></b> <span id="ld-type"></span><br>
+      <span id="ld-mean" style="color:var(--ink-soft);"></span>
+    </div>
+
+    <h2>判定のときの考え方</h2>
+    <ul>
+      <li>最重要は <b>人格</b>、次いで <b>総格</b>。この2つが吉であることをまず確保します。</li>
+      <li>一つの格が凶でも、他の格が補えば総合的には良いと考えます。一格の凶で全否定はしません。</li>
+      <li>82画以上になる場合は、<b>81を引いた数</b>で判定します。</li>
+    </ul>
+
+    <div class="callout note">
+      かつて「女性に強すぎる」とされた数（21・23・33・39など）には、現代では根拠が薄いとする見方が一般的です。気にしすぎず、大吉数として扱って差し支えありません。
+    </div>
+
+    <p class="center mt-32">
+      <a class="btn btn-primary" href="./tool.html">この一覧で自分の名前を診断する →</a>
+    </p>
+  </article>
+</main>
+
+<footer class="site-footer"><div class="wrap">
+  <div>
+    <div class="brand mincho"><span class="seal">名</span>名づけ帖</div>
+    <div style="font-size:.88rem;">姓名判断と、名前に込める物語のメディア。</div>
+  </div>
+  <div class="fnav">
+    <a href="./tool.html">姓名判断ツール</a>
+    <a href="./basics.html">五格の基礎</a>
+    <a href="./strokes.html">81画一覧</a>
+    <a href="./story.html">命名ストーリー</a>
+  </div>
+  <small>※ 姓名判断は古くからの慣習であり、運勢や人生を断定するものではありません。流派により解釈は異なります。&copy; 2026 名づけ帖</small>
+</div></footer>
+
+<script src="./assets/data.js"></script>
+<script>
+  const cls = { "大吉":"daikichi","吉":"kichi","半吉":"hankichi","凶":"kyou" };
+  const grid = document.getElementById("luck-grid");
+  grid.innerHTML = Object.entries(LUCK81).map(([n,[type,mean]]) =>
+    `<div class="luck-cell b-${cls[type]}" data-n="${n}" data-type="${type}" data-mean="${mean}">
+       <div class="ln">${n}</div><div class="lt">${type}</div>
+     </div>`).join("");
+  const box = document.getElementById("luck-detail");
+  grid.addEventListener("click", e => {
+    const cell = e.target.closest(".luck-cell"); if(!cell) return;
+    document.getElementById("ld-num").textContent = cell.dataset.n + "画";
+    const t = document.getElementById("ld-type");
+    t.textContent = cell.dataset.type;
+    t.className = "t-" + cls[cell.dataset.type];
+    document.getElementById("ld-mean").textContent = cell.dataset.mean;
+    box.style.display = "block";
+    box.scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+</script>
+</body>
+</html>
